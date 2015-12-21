@@ -30,6 +30,25 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+if(!function_exists('_log')){
+  function _log( $message ) {
+    if( WP_DEBUG === true ){
+      if( is_array( $message ) || is_object( $message ) ){
+        error_log( print_r( $message, true ) );
+      } else {
+        error_log( $message );
+      }
+    }
+  }
+}
+
+require 'plugin-updates/plugin-update-checker.php';
+$MyUpdateChecker = PucFactory::buildUpdateChecker(
+    'http://netblast.no/wordpress/plugins/nb-wpml-redirect/metadata.json?timestamp='.time(),
+    __FILE__,
+    'nb-wpml-redirect'
+);
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-nb-wpml-redirect-activator.php
