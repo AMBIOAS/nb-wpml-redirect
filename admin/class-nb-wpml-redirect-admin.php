@@ -99,5 +99,46 @@ class Nb_Wpml_Redirect_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/nb-wpml-redirect-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+    
+    
+    // ==========================================
+    /*
+        login according to users language settings
+        
+        if users language is nb then use //DOMAIN/?lang=nb
+        if users language is en then use //DOMAIN/?lang=en
+
+        what about the default language? if en then there is no ?lang=en
+        if users language is en then use //DOMAIN/
+        
+    */
+    
+    function login_redirect( $redirect_to, $requested_redirect_to = null, $user = null ){
+
+        global $user;
+        global $sitepress;
+              
+        $current_language = $sitepress->get_current_language();
+        _log("> login_redirect()");
+        _log($current_language);
+        
+//      _log( get_class($user) ); // WP_Error or WP_User    
+        if ( !is_wp_error($user) ) {
+            _log($user->user_login);  
+            _log($user->user_email);  
+            _log($user->user_status);  
+            _log($user->display_name);  
+            _log($user->roles);  
+            
+        } else {
+            _log("no user object");
+        }
+        
+
+        _log($sitepress->get_default_language() );
+        _log($redirect_to);
+        return site_url( 'wp-admin/' );
+        
+    }
 
 }

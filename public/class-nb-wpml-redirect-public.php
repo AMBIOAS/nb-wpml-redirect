@@ -99,5 +99,75 @@ class Nb_Wpml_Redirect_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/nb-wpml-redirect-public.js', array( 'jquery' ), $this->version, false );
 
 	}
+    
+     // ==========================================
+    function page_access(  ){
+
+        global $user;
+        global $sitepress;
+       
+        // the the language in use now
+        _log("> page_access() to ");
+        
+        
+        $current_language = $sitepress->get_current_language();
+        global $current_user;
+        get_currentuserinfo();
+       // _log($current_user);
+        
+        if ( is_user_logged_in() ) {
+            _log("language on this page: ".$current_language);
+            _log("default language: ".$sitepress->get_default_language() );
+
+            $can_access_sectors = types_render_usermeta_field( "access-to-sector", array( 
+                "separator" => "," ,
+                "output" => "raw",
+                "user_current" => true
+            ) );
+            _log("logged in user as: ".$current_user->user_login);
+            _log("user can access these sectors: ".$can_access_sectors );
+            $can_access_sectors_array = explode(", ", $can_access_sectors);
+            _log("is current language OK to access: ".(in_array($current_language,$can_access_sectors_array)?"yes":"no") );
+            // check if 
+            if ( !in_array($current_language,$can_access_sectors_array) ) {
+                _log("go to alternative language or front-page");
+                // TODO
+                
+            }
+
+            $can_access_leader_pages = types_render_usermeta_field( "access-to-leader-pages", array( 
+                "output" => "raw",
+                "user_current" => true
+            ) );
+            _log( "access to leader pages: ".($can_access_leader_pages==1?"yes":"no") );
+            
+            if ( !$can_access_leader_pages ) {
+                _log("go back or to front-page");
+                
+                // TODO
+                
+            }
+
+        } else {
+            _log("visitor");
+            // no access!!??
+            // go to register page?
+            
+            // TODO
+            
+        }
+        
+        
+        
+        
+          
+        
+        // _log($sitepress);
+        
+        // default:
+        //_log(&$this);
+        // no return
+        
+    }
 
 }

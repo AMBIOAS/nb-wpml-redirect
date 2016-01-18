@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       WPML Redirect
  * Plugin URI:        http://netblast.no/wordpress/plugins/nb-wpml-redirect/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Login redirect based on language defined on user. Access to pages and posts based on language and limited if page or post is for leaders only. 
  * Version:           1.0.0
  * Author:            AMBIO Strong AS
  * Author URI:        http://www.strong.no

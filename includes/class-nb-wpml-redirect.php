@@ -154,6 +154,8 @@ class Nb_Wpml_Redirect {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+        // login redirect           HOOK             /admin          metode
+        $this->loader->add_filter( 'login_redirect', $plugin_admin, 'login_redirect' );
 	}
 
 	/**
@@ -169,6 +171,9 @@ class Nb_Wpml_Redirect {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+        // post and page check
+        $this->loader->add_action( 'wp', $plugin_public, 'page_access' );
 
 	}
 
